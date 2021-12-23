@@ -3,6 +3,11 @@
 #include <iostream>
 #include <stdlib.h>
 
+/*
+Name : Talitha Nabila
+NIM : 1301204516
+*/
+
 using namespace std;
 
 #define info(P) (P) -> info
@@ -45,7 +50,9 @@ struct antrian {
 
 //contract function [INSERT DATA] / CREATE
 void create_list(mll &RS);
+ruangan data_ruangan(string dokter, string spesialisasi, string waktu);
 adr_ruangan newElm_ruangan(ruangan info);
+pasien data_pasien(string nama, string idPasien, string keluhan, int umur);
 adr_pasien newElm_pasien(pasien info);
 void insertLast_ruangan(mll &RS, adr_ruangan R);
 
@@ -65,6 +72,6 @@ void delete_ruangan(mll &RS);
 void showData_RS(mll RS);
 
 //SEARCH
-adr_pasien search_pasien(mll RS, string Name);
+adr_pasien search_pasien(mll RS, string nama_pasien);
 
 #endif // RUMAHSAKIT_H_INCLUDED
