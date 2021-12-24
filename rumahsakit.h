@@ -19,10 +19,11 @@ using namespace std;
 
 #define info(P) (P) -> info
 #define next(P) (P) -> next
+#define prev(P) (P) -> prev
 #define nextPasien(P) (P) -> nextPasien
 #define first(L) ((L).first)
-#define head(L) ((L).head)
-#define tail(L) ((L).tail)
+#define head(L) (L) -> head
+#define tail(L) (L) -> tail
 #define NIL NULL
 
 // [PARENT] DLL untuk dokter spesialis
@@ -35,12 +36,12 @@ struct ruangan{
 struct rumahSakit{
     ruangan info;
     adr_ruangan next, prev;
-    adr_pasien nextPasien;
+    adr_pasien nextPasien, head, tail;
 };
 
 struct mll{
     adr_ruangan first;
-}
+};
 
 // [CHILD] SLL / Queue untuk pasien
 typedef struct antrian *adr_pasien;
@@ -52,13 +53,13 @@ struct pasien {
 
 struct antrian {
     pasien info;
-    adr_pasien next,head,tail;
+    adr_pasien next, head, tail;
 };
 
 //contract function [INSERT DATA] / CREATE
 void create_list(mll &RS);
 ruangan data_ruangan(string dokter, string spesialisasi, string waktu);
-adr_ruangan newElm_ruangan(ruangan info);
+adr_ruangan newElm_RumahSakit(ruangan info);
 pasien data_pasien(string nama, string idPasien, string keluhan, int umur);
 adr_pasien newElm_pasien(pasien info);
 void insertLast_ruangan(mll &RS, adr_ruangan R);

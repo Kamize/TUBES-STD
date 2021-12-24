@@ -31,12 +31,12 @@ ruangan data_ruangan(string dokter, string spesialisasi, string waktu){
     return data;
 }
 
-adr_ruangan newElm_ruangan(ruangan info){
+adr_ruangan newElm_RumahSakit(ruangan info){
     /*
     IS : menerima data ruangan.
     FS : mengembalikan pointer elemen ruangan baru. 
     */
-    adr_ruangan R = new ruangan;
+    adr_ruangan R = new rumahSakit;
     info(R) = info;
     next(R) = NIL;
     nextPasien(R) = NIL;
@@ -54,7 +54,7 @@ pasien data_pasien(string nama, string idPasien, string keluhan, int umur){
     data.idPasien = idPasien;
     data.keluhan = keluhan;
     data.umur = umur;
-    return pasien;
+    return data;
 }
 
 adr_pasien newElm_pasien(pasien info){
@@ -62,7 +62,7 @@ adr_pasien newElm_pasien(pasien info){
     IS : menerima data pasien.
     FS : mengembalikan pointer elemen pasien baru.
     */
-    adr_pasien P = new adr_pasien;
+    adr_pasien P = new antrian;
     info(P) = info;
     next(P) = NIL;
     return P;
@@ -128,7 +128,7 @@ void add_N_ruangan(mll &RS){
         cin >> ruang.spesialisasi;
         cout << "\nWaktu Kerja\t: ";
         cin >> ruang.waktu;
-        insertLast_ruangan(RS, newElm_ruangan(ruang));
+        insertLast_ruangan(RS, newElm_RumahSakit(ruang));
         i++;
     }
     cout << endl;
@@ -185,7 +185,7 @@ void showData_RS(mll RS){
             cout << "\nSpesialisasi \t: " << info(R).spesialisasi;
             cout << "\nWaktu Kerja \t: " << info(R).waktu;
             cout << "\n===== Jumlah Pasien : " << jumlah_pasienRuangan(RS) << " =====";
-            adr_pasien P = nextPasien(P);
+            adr_pasien P = nextPasien(R);
             int j = 1;
             if (P != NIL) {
                 while (P != NIL) {
