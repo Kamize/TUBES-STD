@@ -74,4 +74,11 @@ void showData_RS(mll RS);
 //SEARCH
 adr_pasien search_pasien(mll RS, string nama_pasien);
 
+//HITUNG JUMLAH
+int jumlah_pasienRuangan(mll RS);
+int jumlah_semuaPasien(mll RS);
+
+//MENU
+int selectMenu();
+
 #endif // RUMAHSAKIT_H_INCLUDED

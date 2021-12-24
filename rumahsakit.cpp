@@ -15,7 +15,6 @@ ruangan data_ruangan(string dokter, string spesialisasi, string waktu){
     */
     ruangan data;
     data.dokter = dokter;
-    data.spesialisasi = spesialisasi;
     data.waktu = waktu;
     return data;
 }
@@ -111,6 +110,36 @@ void showData_RS(mll RS){
     Name : Talitha Nabila
     NIM : 1301204516
     */
+    adr_ruangan R = first(RS);
+    int i = 1;
+    if (R != NIL){
+        while (R != NIL){
+            cout << "\n===== Ruangan " << i <<" =====";
+            cout << "\nNama Dokter \t: " << info(R).dokter;
+            cout << "\nSpesialisasi \t: " << info(R).spesialisasi;
+            cout << "\nWaktu Kerja \t: " << info(R).waktu;
+            cout << "\n===== Jumlah Pasien : " << jumlah_pasienRuangan(RS) << " =====";
+            adr_pasien P = nextPasien(P);
+            int j = 1;
+            if (P != NIL) {
+                while (P != NIL) {
+                    cout << "\n PASIEN ANTRIAN KE-" << j;
+                    cout << "\n Nama Pasien \t:" << info(P).nama;
+                    cout << "\n ID \t\t:" << info(P).idPasien;
+                    cout << "\n Keluhan \t\t:" << info(P).keluhan;
+                    cout << "\n Umur \t\t:" << info(P).umur;
+                    P = next(P);
+                    j++;
+                }
+            } else {
+                cout << "\nTidak ada antrian pasien" << endl;
+            }
+            R = next(R);
+            i++;
+        }
+    } else {
+        cout << "\nData Rumah Sakit Kosong" << endl;
+    }
 }
 
 adr_pasien search_pasien(mll RS, string nama_pasien){
@@ -118,4 +147,26 @@ adr_pasien search_pasien(mll RS, string nama_pasien){
     Name : Talitha Nabila
     NIM : 1301204516
     */
+}
+
+int jumlah_pasienRuangan(mll RS){
+    /*
+    Name : Talitha Nabila
+    NIM : 1301204516
+    */
+}
+
+int jumlah_semuaPasien(mll RS){
+    /*
+    Name : Talitha Nabila
+    NIM : 1301204516
+    */
+}
+
+int selectMenu(){
+    /*
+    Name : Talitha Nabila
+    NIM : 1301204516
+    */
+
 }
