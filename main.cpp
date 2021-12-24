@@ -1,11 +1,18 @@
 #include "rumahsakit.h"
 
-int main(){
-    /*
-    Name : Talitha Nabila
-    NIM : 1301204516
-    */
+/*
+=====================
+KELOMPOK 4
+===== Anggota-1 =====
+Name    : Talitha Nabila
+NIM     : 1301204516
+===== Anggota-2 =====
+Name    : Shidqi Fadhlurrahman Yusri
+NIM     : 1301204256
+=====================
+*/
 
+int main(){
     //list & data
     mll RS;
     
@@ -15,23 +22,31 @@ int main(){
     char menu;
     
     create_list(RS);
+
+    /* add contoh data disini pake hardcode :
+        1. RUANGAN
+        insertLast_ruangan(RS, newElm_ruangan(data_ruangan(dokter,spesialisasi,waktu)))
+        2. PASIEN
+        insertNew_pasien(RS, R, newElm_pasien(data_pasien(nama,idPasien,keluhan,umur)))
+    */
+
     pilihan = selectMenu();
     while (pilihan != 0){
         switch (pilihan){
             case 1:
                 //[1] Tambah Ruangan
-                /* code */
+                add_N_ruangan(RS);
                 break;
             case 2:
                 //[2] Hapus Ruangan (Dokter Umum gk bisa di delete)
-                /* code */
+                delete_ruangan(RS);
                 break;
             case 3:
                 //[3] Tambah Pasien *ini harus tau ke ruang mana
-                /* code */
+                add_N_pasien(RS);
                 break;
             case 4:
-                //[4] Proses Pasien
+                //[4] Proses Pasien 
                 /* code */
                 break;
             case 5:
@@ -39,11 +54,11 @@ int main(){
                 /* code */
                 break;
             case 6:
-                //[6] Cari Pasien berdasarkan umur 
+                //[6] Cari Pasien berdasarkan umur
                 /* code */
                 break;
             case 7:
-                //[7] Jumlah Pasien saat ini
+                //[7] Jumlah Semua Pasien saat ini
                 /* code */
                 break;
             case 8:

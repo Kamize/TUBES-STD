@@ -4,8 +4,15 @@
 #include <stdlib.h>
 
 /*
-Name : Talitha Nabila
-NIM : 1301204516
+=====================
+KELOMPOK 4
+===== Anggota-1 =====
+Name    : Talitha Nabila
+NIM     : 1301204516
+===== Anggota-2 =====
+Name    : Shidqi Fadhlurrahman Yusri
+NIM     : 1301204256
+=====================
 */
 
 using namespace std;
@@ -56,11 +63,16 @@ pasien data_pasien(string nama, string idPasien, string keluhan, int umur);
 adr_pasien newElm_pasien(pasien info);
 void insertLast_ruangan(mll &RS, adr_ruangan R);
 
+
 //ENQUEUE
 void insertNew_pasien(mll &RS, adr_ruangan R, adr_pasien P);
 
 //DEQUEUE
 void proses_pasien(mll &RS, adr_ruangan R, adr_pasien P);
+
+//INPUT N DATA
+void add_N_ruangan(mll &RS);
+void add_N_pasien(mll &RS); //tanyain di ruangan mana dulu
 
 //DELETE
 void deleteFirst_ruangan(mll &RS, adr_ruangan R);
@@ -72,7 +84,8 @@ void delete_ruangan(mll &RS);
 void showData_RS(mll RS);
 
 //SEARCH
-adr_pasien search_pasien(mll RS, string nama_pasien);
+adr_ruangan search_ruangan(mll RS, string spesialisasi);
+adr_pasien search_pasien(mll RS, int umur);
 
 //HITUNG JUMLAH
 int jumlah_pasienRuangan(mll RS);
