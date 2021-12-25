@@ -1,6 +1,7 @@
 #ifndef RUMAHSAKIT_H_INCLUDED
 #define RUMAHSAKIT_H_INCLUDED
 #include <iostream>
+#include <string>
 #include <stdlib.h>
 
 /*
@@ -22,7 +23,7 @@ using namespace std;
 #define prev(P) (P) -> prev
 #define nextPasien(P) (P) -> nextPasien
 #define first(L) ((L).first)
-#define head(L) (L) -> head
+#define last(L) ((L).last)
 #define tail(L) (L) -> tail
 #define NIL NULL
 
@@ -36,11 +37,11 @@ struct ruangan{
 struct rumahSakit{
     ruangan info;
     adr_ruangan next, prev;
-    adr_pasien nextPasien, head, tail;
+    adr_pasien nextPasien, tail;
 };
 
 struct mll{
-    adr_ruangan first;
+    adr_ruangan first, last;
 };
 
 // [CHILD] SLL / Queue untuk pasien
@@ -53,7 +54,7 @@ struct pasien {
 
 struct antrian {
     pasien info;
-    adr_pasien next, head, tail;
+    adr_pasien next;
 };
 
 //contract function [INSERT DATA] / CREATE
@@ -69,27 +70,28 @@ void insertLast_ruangan(mll &RS, adr_ruangan R);
 void insertNew_pasien(mll &RS, adr_ruangan R, adr_pasien P);
 
 //DEQUEUE
-void proses_pasien(mll &RS, adr_ruangan R, adr_pasien P);
+void proses_pasien(mll &RS, adr_ruangan R, adr_pasien &P);
 
 //INPUT N DATA
 void add_N_ruangan(mll &RS);
 void add_N_pasien(mll &RS); //tanyain di ruangan mana dulu
 
 //DELETE
-void deleteFirst_ruangan(mll &RS, adr_ruangan R);
-void deleteLast_ruangan(mll &RS, adr_ruangan R);
-void deleteAfter_ruangan(mll &RS, adr_ruangan R);
+void deleteFirst_ruangan(mll &RS, adr_ruangan &R);
+void deleteLast_ruangan(mll &RS, adr_ruangan &R);
+void deleteAfter_ruangan(mll &RS, adr_ruangan prec, adr_ruangan &R);
 void delete_ruangan(mll &RS);
 
 //SHOW
 void showData_RS(mll RS);
+void showData_Dokter(mll RS);
 
 //SEARCH
 adr_ruangan search_ruangan(mll RS, string spesialisasi);
 adr_pasien search_pasien(mll RS, int umur);
 
 //HITUNG JUMLAH
-int jumlah_pasienRuangan(mll RS);
+int jumlah_pasienRuangan(mll RS, adr_ruangan R);
 int jumlah_semuaPasien(mll RS);
 
 //MENU
