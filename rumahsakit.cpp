@@ -342,11 +342,26 @@ adr_ruangan search_ruangan(mll RS, string spesialisasi){
     return NIL;
 }
 
-adr_pasien search_pasien(mll RS, int umur){
+adr_pasien search_pasien(mll RS, string nama){
     /*
-    IS : menerima list yang mungkin kosong dan umur pasien.
-    FS : mengembalikan pointer yang menunjukkan data pasien berdasarkan umur.
+    IS : menerima list yang mungkin kosong dan nama pasien.
+    FS : mengembalikan pointer yang menunjukkan data pasien berdasarkan nama.
     */
+
+    adr_pasien P;
+    adr_ruangan R;
+    R = first(RS);
+    while (R != NIL) {
+        P = nextPasien(R);
+        while (P != NIL) {
+            if (info(P).nama == nama) {
+                return P;
+            }
+            P = next(P);
+        }
+        R = next(R);
+    }
+    return NIL;
 }
 
 int jumlah_pasienRuangan(mll RS, adr_ruangan R){

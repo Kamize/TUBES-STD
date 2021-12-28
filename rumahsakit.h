@@ -88,7 +88,7 @@ void showData_Dokter(mll RS);
 
 //SEARCH
 adr_ruangan search_ruangan(mll RS, string spesialisasi);
-adr_pasien search_pasien(mll RS, int umur);
+adr_pasien search_pasien(mll RS, string nama);
 
 //HITUNG JUMLAH
 int jumlah_pasienRuangan(mll RS, adr_ruangan R);
