@@ -46,7 +46,7 @@ adr_ruangan newElm_RumahSakit(ruangan info){
     return R;
 }
 
-pasien data_pasien(string nama, string idPasien, string keluhan, int umur){
+pasien data_pasien(string nama, int idPasien, string keluhan, int umur){
     /*
     IS : menerima data string nama, idPasien, keluhan, dan integer umur.
     FS : mengembalikan data dalam bentuk structure pasien.
@@ -169,6 +169,32 @@ void add_N_pasien(mll &RS){
     FS : list dengan elemen ruangan yang telah berisi N data pasien.
     */
     //tanya dulu mau disimpen di ruang mana pasiennya
+    adr_ruangan R;
+    adr_pasien P;
+    string dokter;
+    pasien pas;
+    int n;
+
+    cout << "Masukkan banyaknya inputan : ";
+    cin >> n;
+    cout << "Masukkan Data Pasien : " << endl;
+    for (int i = 1; i < n+1; i++) {
+        cout << "ID Pasien";
+        cin >> pas.idPasien;
+        cout << "Nama : ";
+        cin >> pas.nama;
+        cout << "Umur : ";
+        cin >> pas.umur;
+        cout << "Keluhan : ";
+        cin >> pas.keluhan;
+        P = newElm_pasien(pas);
+        showData_Dokter(RS);
+        cout << "Spesialisasi Dokter yang di inginkan : ";
+        cin >> dokter;
+        R = search_ruangan(RS, dokter);
+        insertNew_pasien(RS, R, P);
+    }
+
 }
 
 void deleteFirst_ruangan(mll &RS, adr_ruangan &R){
@@ -211,12 +237,39 @@ void deleteAfter_ruangan(mll &RS, adr_ruangan prec, adr_ruangan &R){
     next(R) = NIL;
 }
 
-void delete_ruangan(mll &RS){
+void delete_ruangan(mll &RS, string dokter){
     /*
     IS : menerima list yang mungkin kosong.
     FS : delete data berdasarkan inputan user.
     */
     // ketentuan : dokter umum tidak bisa dihapus
+    adr_ruangan S, R, U;
+    adr_pasien P;
+    U = first(RS);
+    while (U != NIL) {
+        if (info(U).spesialisasi == "Dokter Umum") {
+            break;
+        }
+        U = next(U);
+    }
+    S = first(RS);
+    while (S != NIL) {
+        if (info(S).dokter == dokter) {
+            if (info(S).spesialisasi != "Dokter Umum") {
+                if (nextPasien(S) != NIL) {
+                    while (nextPasien(S) != NIL) {
+                        proses_pasien(RS, S, P);
+                        insertNew_pasien(RS, U, P);
+                    }
+                    break;
+                }
+            } else {
+                cout << "Dokter Umum tidak dapat dihapus!" << endl;
+                break;
+            }
+        }
+        S = next(S);
+    }
 }
 
 void showData_RS(mll RS){

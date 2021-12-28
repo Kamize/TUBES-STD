@@ -48,8 +48,8 @@ struct mll{
 typedef struct antrian *adr_pasien;
 
 struct pasien {
-    string nama, idPasien, keluhan;
-    int umur;
+    string nama, keluhan;
+    int umur, idPasien;
 };
 
 struct antrian {
@@ -61,7 +61,7 @@ struct antrian {
 void create_list(mll &RS);
 ruangan data_ruangan(string dokter, string spesialisasi, string waktu);
 adr_ruangan newElm_RumahSakit(ruangan info);
-pasien data_pasien(string nama, string idPasien, string keluhan, int umur);
+pasien data_pasien(string nama, int idPasien, string keluhan, int umur);
 adr_pasien newElm_pasien(pasien info);
 void insertLast_ruangan(mll &RS, adr_ruangan R);
 
@@ -80,7 +80,7 @@ void add_N_pasien(mll &RS); //tanyain di ruangan mana dulu
 void deleteFirst_ruangan(mll &RS, adr_ruangan &R);
 void deleteLast_ruangan(mll &RS, adr_ruangan &R);
 void deleteAfter_ruangan(mll &RS, adr_ruangan prec, adr_ruangan &R);
-void delete_ruangan(mll &RS);
+void delete_ruangan(mll &RS, string dokter);
 
 //SHOW
 void showData_RS(mll RS);
