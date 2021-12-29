@@ -41,17 +41,15 @@ adr_ruangan newElm_RumahSakit(ruangan info){
     info(R) = info;
     next(R) = NIL;
     prev(R) = NIL;
-    nextPasien(R) = NIL;
-    tail(R) = NIL;
     return R;
 }
 
-pasien data_pasien(string nama, int idPasien, string keluhan, int umur){
+infoPasien data_pasien(string nama, int idPasien, string keluhan, int umur){
     /*
     IS : menerima data string nama, idPasien, keluhan, dan integer umur.
     FS : mengembalikan data dalam bentuk structure pasien.
     */
-    pasien data;
+    infoPasien data;
     data.nama = nama;
     data.idPasien = idPasien;
     data.keluhan = keluhan;
@@ -59,14 +57,23 @@ pasien data_pasien(string nama, int idPasien, string keluhan, int umur){
     return data;
 }
 
-adr_pasien newElm_pasien(pasien info){
+adr_pasien newElm_pasien(infoPasien info){
     /*
     IS : menerima data pasien.
     FS : mengembalikan pointer elemen pasien baru.
     */
-    adr_pasien P = new antrian;
+    adr_pasien P = new elmPasien;
     info(P) = info;
     next(P) = NIL;
+    return P;
+}
+
+adr_antrian newElm_antrian() {
+    adr_antrian P;
+
+    P = new list_antrian;
+    next(P) = NIL;
+    pasien(P) = NIL;
     return P;
 }
 
@@ -83,20 +90,25 @@ void insertLast_ruangan(mll &RS, adr_ruangan R){
     }
 }
 
-void insertNew_pasien(mll &RS, adr_ruangan R, adr_pasien P){
+void insertLast_pasien(ListChild &PAS, adr_pasien P) {
+    if (first(PAS) == NIL) {
+        first(PAS) = P;
+    } else {
+        adr_pasien Q;
+        Q = first(PAS);
+        while (next(Q) != NIL) {
+            Q = next(Q);
+        }
+        next(Q) = P;
+    }
+}
+
+void insertNew_pasien(mll &RS, adr_pasien P){
     /*
     IS : menerima list yang mungkin kosong, pointer ruangan, dan pointer elemen pasien baru.
     FS : mengembalikan list dengan ruangan yang telah ditambahkan elemen pasien di akhir (ENQUEUE).
     */
-    if (first(RS) != NIL){
-        if (nextPasien(R) == NIL){
-            nextPasien(R) = P;
-            tail(R) = P;
-        } else {
-            next(tail(R)) = P;
-            tail(R) = P;
-        }
-    }
+    
 }
 
 void proses_pasien(mll &RS, adr_ruangan R, adr_pasien &P){
@@ -104,15 +116,7 @@ void proses_pasien(mll &RS, adr_ruangan R, adr_pasien &P){
     IS : menerima list yang mungkin kosong, pointer ruangan dan pointer elemen pasien.
     FS : mengembalikan list dengan pasien ruangan yang telah diproses (DEQUEUE).
     */
-    if (next(nextPasien(R)) == NIL) {
-        P = nextPasien(R);
-        nextPasien(R) = NIL;
-        tail(R) = NIL;
-    } else {
-        P = nextPasien(R);
-        nextPasien(R) = next(P);
-        next(P) = NIL;
-    }
+    
 }
 
 void add_N_ruangan(mll &RS){
@@ -172,7 +176,7 @@ void add_N_pasien(mll &RS){
     adr_ruangan R;
     adr_pasien P;
     string dokter;
-    pasien pas;
+    infoPasien pas;
     int n;
 
     cout << "Masukkan banyaknya inputan : ";
@@ -243,33 +247,33 @@ void delete_ruangan(mll &RS, string dokter){
     FS : delete data berdasarkan inputan user.
     */
     // ketentuan : dokter umum tidak bisa dihapus
-    adr_ruangan S, R, U;
-    adr_pasien P;
-    U = first(RS);
-    while (U != NIL) {
-        if (info(U).spesialisasi == "Dokter Umum") {
-            break;
-        }
-        U = next(U);
-    }
-    S = first(RS);
-    while (S != NIL) {
-        if (info(S).dokter == dokter) {
-            if (info(S).spesialisasi != "Dokter Umum") {
-                if (nextPasien(S) != NIL) {
-                    while (nextPasien(S) != NIL) {
-                        proses_pasien(RS, S, P);
-                        insertNew_pasien(RS, U, P);
-                    }
-                    break;
-                }
-            } else {
-                cout << "Dokter Umum tidak dapat dihapus!" << endl;
-                break;
-            }
-        }
-        S = next(S);
-    }
+    // adr_ruangan S, R, U;
+    // adr_pasien P;
+    // U = first(RS);
+    // while (U != NIL) {
+    //     if (info(U).spesialisasi == "Dokter Umum") {
+    //         break;
+    //     }
+    //     U = next(U);
+    // }
+    // S = first(RS);
+    // while (S != NIL) {
+    //     if (info(S).dokter == dokter) {
+    //         if (info(S).spesialisasi != "Dokter Umum") {
+    //             if (nextPasien(S) != NIL) {
+    //                 while (nextPasien(S) != NIL) {
+    //                     proses_pasien(RS, S, P);
+    //                     insertNew_pasien(RS, U, P);
+    //                 }
+    //                 break;
+    //             }
+    //         } else {
+    //             cout << "Dokter Umum tidak dapat dihapus!" << endl;
+    //             break;
+    //         }
+    //     }
+    //     S = next(S);
+    // }
 }
 
 void showData_RS(mll RS){
@@ -369,9 +373,9 @@ int jumlah_pasienRuangan(mll RS, adr_ruangan R){
     IS : menerima list yang mungkin kosong.
     FS : mengembalikan nilai jumlah pasien dalam suatu ruangan.
     */
-    adr_pasien P;
+    adr_antrian P;
     int jumlah = 0;
-    P = nextPasien(R);
+    P = nextAntrian(R);
     while (P != NIL) {
         jumlah++;
         P = next(P);
@@ -385,11 +389,11 @@ int jumlah_semuaPasien(mll RS){
     FS : mengembalikan nilai jumlah pasien.
     */
     adr_ruangan R;
-    adr_pasien P;
+    adr_antrian P;
     int jumlah = 0;
     R = first(RS);
     while (R != NIL) {
-        P = nextPasien(R);
+        P = nextAntrian(R);
         while (P != NIL) {
             jumlah++;
             P = next(P);

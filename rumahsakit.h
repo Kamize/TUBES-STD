@@ -21,7 +21,8 @@ using namespace std;
 #define info(P) (P) -> info
 #define next(P) (P) -> next
 #define prev(P) (P) -> prev
-#define nextPasien(P) (P) -> nextPasien
+#define pasien(P) (P) -> pasien
+#define nextAntrian(P) (P) -> nextAntrian
 #define first(L) ((L).first)
 #define last(L) ((L).last)
 #define tail(L) (L) -> tail
@@ -29,6 +30,7 @@ using namespace std;
 
 // [PARENT] DLL untuk dokter spesialis
 typedef struct rumahSakit *adr_ruangan;
+typedef struct list_antrian *adr_antrian;
 
 struct ruangan{
     string dokter, spesialisasi, waktu;
@@ -37,7 +39,7 @@ struct ruangan{
 struct rumahSakit{
     ruangan info;
     adr_ruangan next, prev;
-    adr_pasien nextPasien, tail;
+    adr_antrian nextAntrian;
 };
 
 struct mll{
@@ -45,25 +47,40 @@ struct mll{
 };
 
 // [CHILD] SLL / Queue untuk pasien
-typedef struct antrian *adr_pasien;
+typedef struct elmPasien *adr_pasien;
 
-struct pasien {
+struct infoPasien {
     string nama, keluhan;
     int umur, idPasien;
 };
 
-struct antrian {
-    pasien info;
+struct elmPasien {
+    infoPasien info;
     adr_pasien next;
 };
+
+struct ListChild
+{
+    adr_pasien first;
+};
+
+struct list_antrian
+{
+    adr_pasien pasien;
+    adr_antrian next;
+};
+
+// info(pasien(P)).
 
 //contract function [INSERT DATA] / CREATE
 void create_list(mll &RS);
 ruangan data_ruangan(string dokter, string spesialisasi, string waktu);
 adr_ruangan newElm_RumahSakit(ruangan info);
-pasien data_pasien(string nama, int idPasien, string keluhan, int umur);
-adr_pasien newElm_pasien(pasien info);
+infoPasien data_pasien(string nama, int idPasien, string keluhan, int umur);
+adr_pasien newElm_pasien(infoPasien info);
+adr_antrian newElm_antrian();
 void insertLast_ruangan(mll &RS, adr_ruangan R);
+void insertLast_pasien(ListChild &PAS, adr_pasien P);
 
 
 //ENQUEUE
