@@ -74,6 +74,7 @@ struct list_antrian
 
 //contract function [INSERT DATA] / CREATE
 void create_list(mll &RS);
+void create_list_child(ListChild &PAS);
 ruangan data_ruangan(string dokter, string spesialisasi, string waktu);
 adr_ruangan newElm_RumahSakit(ruangan info);
 infoPasien data_pasien(string nama, int idPasien, string keluhan, int umur);
@@ -91,7 +92,7 @@ void proses_pasien(mll &RS, adr_ruangan R, adr_pasien &P);
 
 //INPUT N DATA
 void add_N_ruangan(mll &RS);
-void add_N_pasien(mll &RS); //tanyain di ruangan mana dulu
+void add_N_pasien(mll &RS, ListChild &PAS); //tanyain di ruangan mana dulu
 
 //DELETE
 void deleteFirst_ruangan(mll &RS, adr_ruangan &R);
@@ -105,7 +106,7 @@ void showData_Dokter(mll RS);
 
 //SEARCH
 adr_ruangan search_ruangan(mll RS, string spesialisasi);
-adr_pasien search_pasien(mll RS, string nama);
+adr_pasien search_pasien(ListChild PAS, string nama);
 
 //HITUNG JUMLAH
 int jumlah_pasienRuangan(mll RS, adr_ruangan R);
