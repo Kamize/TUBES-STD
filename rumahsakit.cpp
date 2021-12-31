@@ -36,6 +36,7 @@ ruangan data_ruangan(string dokter, string spesialisasi, string waktu){
     */
     ruangan data;
     data.dokter = dokter;
+    data.spesialisasi = spesialisasi;
     data.waktu = waktu;
     return data;
 }
@@ -49,6 +50,7 @@ adr_ruangan newElm_RumahSakit(ruangan info){
     info(R) = info;
     next(R) = NIL;
     prev(R) = NIL;
+    nextAntrian(R) = NIL;
     return R;
 }
 
@@ -77,6 +79,10 @@ adr_pasien newElm_pasien(infoPasien info){
 }
 
 adr_antrian newElm_antrian() {
+    /*
+    IS : -
+    FS : mengembalikan pointer elemen baru. 
+    */
     adr_antrian P;
 
     P = new list_antrian;
@@ -95,6 +101,7 @@ void insertLast_ruangan(mll &RS, adr_ruangan R){
     } else {
         next(last(RS)) = R;
         prev(R) = last(RS);
+        last(RS) = R;
     }
 }
 
@@ -125,7 +132,10 @@ void insertNew_pasien(mll &RS, adr_ruangan R, adr_pasien P){
     S = newElm_antrian();
 
     A = nextAntrian(R);
-    if (A != NIL) {
+    if (A == NIL){
+        next(A) = S;
+        pasien(S) = P;
+    } else {
         while (next(A) != NIL) {
             A = next(A);
         }
@@ -164,35 +174,14 @@ void add_N_ruangan(mll &RS){
     while (i < (N+1)) {
         cout << "\n\n===== Data Ruangan no. " << i << "=====";
         cout << "\nNama Dokter \t: ";
-        getline(cin, ruang.dokter);
-        cout << "\nSpesialisasi \t: ";
-        cout << "\t [1] Dokter Umum" << endl;
-        cout << "\t [2] Dokter Gigi" << endl;
-        cout << "\t [3] Dokter Anak" << endl;
-        cout << "\t [4] Dokter THT" << endl;
-        cin >> spesialisasi;
-        switch (spesialisasi)
-        {
-        case 1:
-            ruang.spesialisasi = "Dokter Umum";
-            break;
-        case 2:
-            ruang.spesialisasi = "Dokter Gigi";
-            break;
-        case 3:
-            ruang.spesialisasi = "Dokter Anak";
-            break;
-        case 4:
-            ruang.spesialisasi = "Dokter THT";
-            break;
-        default:
-            cout << "Inputan tidak sesuai, spesialisasi dijadikan Umum" << endl;
-            ruang.spesialisasi = "Dokter Umum";
-            break;
-        }
+        scanf(" %[^\n]s",ruang.dokter);
+        ruang.spesialisasi = selectSpesialisasi();
         cout << "\nWaktu Kerja\t: ";
-        getline(cin, ruang.waktu);
+        // scanf(" %[^\n]s",ruang.waktu);
+        cin >> ruang.waktu;
+        cout << "ayayay";
         insertLast_ruangan(RS, newElm_RumahSakit(ruang));
+        cout << "ayayay";
         i++;
     }
     cout << endl;
@@ -203,7 +192,7 @@ void add_N_pasien(mll &RS, ListChild &PAS){
     IS : menerima list dan input nilai jumlah data (N) yang ingin diinputkan berupa integer.
     FS : list dengan elemen ruangan yang telah berisi N data pasien.
     */
-    //tanya dulu mau disimpen di ruang mana pasiennya
+    
     adr_ruangan R;
     adr_pasien P;
     adr_antrian S;
@@ -211,25 +200,32 @@ void add_N_pasien(mll &RS, ListChild &PAS){
     infoPasien pas;
     int n;
 
-    cout << "Masukkan banyaknya inputan : ";
+    cout << "\nMasukkan banyaknya inputan : ";
     cin >> n;
-    cout << "Masukkan Data Pasien : " << endl;
     for (int i = 1; i < n+1; i++) {
-        cout << "ID Pasien";
+        cout << "\n=== Masukkan Data Pasien " << i << " ===";
+        cout << "\nID Pasien \t:";
         cin >> pas.idPasien;
-        cout << "Nama : ";
+        cout << "\nNama \t: ";
         cin >> pas.nama;
-        cout << "Umur : ";
+        cout << "\nUmur \t: ";
         cin >> pas.umur;
-        cout << "Keluhan : ";
+        cout << "\nKeluhan \t: ";
         cin >> pas.keluhan;
         P = newElm_pasien(pas);
         showData_Dokter(RS);
-        cout << "Spesialisasi Dokter yang di inginkan : ";
+        cout << "\nSpesialisasi Dokter yang diinginkan : ";
         cin >> dokter;
         R = search_ruangan(RS, dokter);
-        insertLast_pasien(PAS, P);
-        insertNew_pasien(RS, R, P);
+        //ERROR HANDLING
+        if (R == NIL){
+            cout << "\n. . . Spesialisasi Dokter tidak ditemukan.";
+            cout << "\nData pasien " << i << " gagal diinput.";
+        } else {
+            insertLast_pasien(PAS, P);
+            insertNew_pasien(RS, R, P);
+            cout << "\nData pasien " << i << " berhasil diinput";
+        }
     }
 
 }
@@ -283,13 +279,8 @@ void delete_ruangan(mll &RS, string dokter){
     adr_ruangan S, R, U;
     adr_antrian A, B;
     adr_pasien P;
-    U = first(RS);
-    while (U != NIL) { //Mengambil pointer untuk dokter umum
-        if (info(U).spesialisasi == "Dokter Umum") {
-            break;
-        }
-        U = next(U);
-    }
+
+    U = search_ruangan(RS, "Dokter Umum");
 
     S = first(RS);
     while (S != NIL) {
@@ -305,7 +296,7 @@ void delete_ruangan(mll &RS, string dokter){
                     break;
                 }
             } else {
-                cout << "Dokter Umum tidak dapat dihapus!" << endl;
+                cout << "\nDokter Umum tidak dapat dihapus!" << endl;
                 break;
             }
         }
@@ -362,6 +353,7 @@ void showData_Dokter(mll RS) {
             cout << "\nWaktu Kerja \t: " << info(R).waktu;
             i++;
         }
+        cout << "\n\n============================= ";
     } else {
         cout << "\nData Rumah Sakit Kosong" << endl;
     }
@@ -421,16 +413,10 @@ int jumlah_semuaPasien(mll RS){
     FS : mengembalikan nilai jumlah pasien.
     */
     adr_ruangan R;
-    adr_antrian P;
     int jumlah = 0;
     R = first(RS);
     while (R != NIL) {
-        P = nextAntrian(R);
-        while (P != NIL) {
-            if (pasien(P) != NIL)
-                jumlah++;  
-            P = next(P);
-        }
+        jumlah = jumlah + jumlah_pasienRuangan(RS, R);
         R = next(R);
     }
     return jumlah;
@@ -444,11 +430,11 @@ int selectMenu(){
     cout <<"\n============ RUMAH SAKIT ABCDEF ============";
     cout <<"\n=================== Menu ===================";
     cout <<"\n [1] Tambah data ruangan";
-    cout <<"\n [2] Hapus ruangan";
+    cout <<"\n [2] Hapus ruangan berdasarkan nama dokter";
     cout <<"\n [3] Tambah data pasien";
     cout <<"\n [4] Proses pasien";
     cout <<"\n [5] Cari dokter berdasarkan spesialisasi";
-    cout <<"\n [6] Cari Pasien berdasarkan umur";
+    cout <<"\n [6] Cari Pasien berdasarkan nama";
     cout <<"\n [7] Jumlah semua pasien saat ini";
     cout <<"\n [8] Show Data Ruangan";
     cout <<"\n [9] Show All Data";
@@ -458,4 +444,33 @@ int selectMenu(){
     int input = 0;
     cin >> input;
     return input;
+}
+
+string selectSpesialisasi(){
+    cout << "\n [1] Dokter Umum";
+    cout << "\n [2] Dokter Gigi";
+    cout << "\n [3] Dokter Anak";
+    cout << "\n [4] Dokter THT";
+    cout << "\n Spesialisasi \t: ";
+    int input;
+    cin >> input;
+    switch (input)
+        {
+        case 1:
+            return "Dokter Umum";
+            break;
+        case 2:
+            return "Dokter Gigi";
+            break;
+        case 3:
+            return "Dokter Anak";
+            break;
+        case 4:
+            return "Dokter THT";
+            break;
+        default:
+            cout << "Inputan tidak sesuai, spesialisasi dijadikan Umum" << endl;
+            return "Dokter Umum";
+            break;
+        }
 }

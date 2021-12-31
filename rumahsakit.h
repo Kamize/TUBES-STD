@@ -114,5 +114,6 @@ int jumlah_semuaPasien(mll RS);
 
 //MENU
 int selectMenu();
+string selectSpesialisasi();
 
 #endif // RUMAHSAKIT_H_INCLUDED

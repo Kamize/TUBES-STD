@@ -15,13 +15,19 @@ NIM     : 1301204256
 int main(){
     //list & data
     mll RS;
-    
+    ListChild PAS;
     
     //main menu
     int pilihan = 0;
     char menu;
     
+    //input
+    string namaDokter, namaPasien, spesialisasi;
+    adr_pasien P;
+    
+    //create list
     create_list(RS);
+    create_list_child(PAS);
 
     /* add contoh data disini pake hardcode :
         1. RUANGAN
@@ -39,42 +45,55 @@ int main(){
                 break;
             case 2:
                 //[2] Hapus Ruangan (Dokter Umum gk bisa di delete)
-                delete_ruangan(RS);
+                cout << "\nMasukkan nama dokter yang akan dihapus : ";
+                cin >> namaDokter;
+                delete_ruangan(RS,namaDokter);
                 break;
             case 3:
                 //[3] Tambah Pasien *ini harus tau ke ruang mana
-                add_N_pasien(RS);
+                add_N_pasien(RS, PAS);
                 break;
             case 4:
                 //[4] Proses Pasien 
-                /* code */
+                cout << "\nMasukkan spesialisasi dokter untuk proses pasien : ";
+                cin >> spesialisasi;
+                proses_pasien(RS, search_ruangan(RS, spesialisasi),P);
                 break;
             case 5:
                 //[5] Cari Dokter berdasarkan spesialisasi
-                /* code */
+                cout << "\nMasukkan spesialisasi dokter : ";
+                cin >> spesialisasi;
+                search_ruangan(RS, spesialisasi);
                 break;
             case 6:
-                //[6] Cari Pasien berdasarkan umur
-                /* code */
+                //[6] Cari Pasien berdasarkan nama
+                cout <<  "\nMasukkan nama pasien : ";
+                cin >> namaPasien;
+                if (search_pasien(PAS, namaPasien) == NIL){
+                    cout << "\nPasien Tidak ditemukan";
+                } else {
+                    cout << "\nPasien ditemukan";
+                }
                 break;
             case 7:
                 //[7] Jumlah Semua Pasien saat ini
-                /* code */
+                cout << "\nTotal jumlah semua Pasien saat ini adalah " << jumlah_semuaPasien(RS) << " pasien";
                 break;
             case 8:
-                //[8] Show Data Ruangan Tertentu 
-                /* code */
+                //[8] Show Data Ruangan
+                showData_Dokter(RS);
                 break;
             case 9:
                 //[9] Show Data Keseluruhan RS
-                /* code */
+                showData_RS(RS);
+                break;
             case 0:
                 //[0] EXIT
                 break;
             default:
                 break;
         }
-        cout << "\n Kembali ke menu utama (Y/N) : ";
+        cout << "\nKembali ke menu utama (Y/N) : ";
         cin >> menu;
         if (menu == 'Y'){
             //CLEAR SCREEN
