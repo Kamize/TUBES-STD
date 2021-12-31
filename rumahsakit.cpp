@@ -98,6 +98,7 @@ void insertLast_ruangan(mll &RS, adr_ruangan R){
     */
     if (first(RS) == NIL){
         first(RS) = R;
+        last(RS) = R;
     } else {
         next(last(RS)) = R;
         prev(R) = last(RS);
@@ -133,7 +134,7 @@ void insertNew_pasien(mll &RS, adr_ruangan R, adr_pasien P){
 
     A = nextAntrian(R);
     if (A == NIL){
-        next(A) = S;
+        A = S;
         pasien(S) = P;
     } else {
         while (next(A) != NIL) {
@@ -167,21 +168,18 @@ void add_N_ruangan(mll &RS){
     */
     ruangan ruang;
     adr_ruangan R;
-    int N, spesialisasi;
-    int i = 1;
+    int N;
     cout << "Banyak data ruangan yang ingin dimasukkan : ";
     cin >> N;
+    int i = 1;
     while (i < (N+1)) {
-        cout << "\n\n===== Data Ruangan no. " << i << "=====";
+        cout << endl << "\n===== Data Ruangan no. " << i << "=====";
         cout << "\nNama Dokter \t: ";
-        scanf(" %[^\n]s",ruang.dokter);
+        cin >> ruang.dokter;
         ruang.spesialisasi = selectSpesialisasi();
-        cout << "\nWaktu Kerja\t: ";
-        // scanf(" %[^\n]s",ruang.waktu);
+        cout <<"\nWaktu Kerja\t: ";
         cin >> ruang.waktu;
-        cout << "ayayay";
         insertLast_ruangan(RS, newElm_RumahSakit(ruang));
-        cout << "ayayay";
         i++;
     }
     cout << endl;
@@ -215,15 +213,19 @@ void add_N_pasien(mll &RS, ListChild &PAS){
         P = newElm_pasien(pas);
         showData_Dokter(RS);
         cout << "\nSpesialisasi Dokter yang diinginkan : ";
-        cin >> dokter;
+        dokter = selectSpesialisasi();
         R = search_ruangan(RS, dokter);
+        cout << "1234567" <<endl;
         //ERROR HANDLING
         if (R == NIL){
             cout << "\n. . . Spesialisasi Dokter tidak ditemukan.";
             cout << "\nData pasien " << i << " gagal diinput.";
         } else {
+            cout << "1234567" <<endl;
             insertLast_pasien(PAS, P);
+            cout << "1234567" <<endl;
             insertNew_pasien(RS, R, P);
+            cout << "1234567" <<endl;
             cout << "\nData pasien " << i << " berhasil diinput";
         }
     }
@@ -351,6 +353,7 @@ void showData_Dokter(mll RS) {
             cout << "\nNama Dokter \t: " << info(R).dokter;
             cout << "\nSpesialisasi \t: " << info(R).spesialisasi;
             cout << "\nWaktu Kerja \t: " << info(R).waktu;
+            R = next(R);
             i++;
         }
         cout << "\n\n============================= ";
