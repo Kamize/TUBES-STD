@@ -36,6 +36,23 @@ int main(){
         insertNew_pasien(RS, R, newElm_pasien(data_pasien(nama,idPasien,keluhan,umur)))
     */
 
+    //INSERT RUANGAN
+    insertLast_ruangan(RS, newElm_RumahSakit(data_ruangan("Dhaifa","Dokter Gigi","08:00-16:00")));
+    insertLast_ruangan(RS, newElm_RumahSakit(data_ruangan("Nanditya","Dokter Umum","08:00-16:00")));
+    
+    //INSERT PASIEN
+    P = newElm_pasien(data_pasien("Henry",123456,"DBD",16));
+    insertLast_pasien(PAS, P);
+    insertNew_pasien(RS, search_ruangan(RS,"Dokter Umum"), P);
+
+    P = newElm_pasien(data_pasien("Betty",123467,"Sakit gigi",20));
+    insertLast_pasien(PAS, P);
+    insertNew_pasien(RS, search_ruangan(RS,"Dokter Gigi"), P);
+
+    P = newElm_pasien(data_pasien("Andra",123458,"Sesak napas",54));
+    insertLast_pasien(PAS, P);
+    insertNew_pasien(RS, search_ruangan(RS,"Dokter Umum"), P);
+    
     pilihan = selectMenu();
     while (pilihan != 0){
         switch (pilihan){
@@ -62,8 +79,16 @@ int main(){
             case 5:
                 //[5] Cari Dokter berdasarkan spesialisasi
                 cout << "\nMasukkan spesialisasi dokter : ";
-                cin >> spesialisasi;
-                search_ruangan(RS, spesialisasi);
+                spesialisasi = selectSpesialisasi();
+                // scanf("%*[^\n]\n", spesialisasi);
+                // getline(cin, spesialisasi);
+                // cin >> spesialisasi;
+                
+                if (search_ruangan(RS, spesialisasi) == NIL){
+                    cout << "\nDokter Tidak ditemukan";
+                } else {
+                    cout << "\nDokter ditemukan";
+                }
                 break;
             case 6:
                 //[6] Cari Pasien berdasarkan nama
@@ -81,7 +106,8 @@ int main(){
                 break;
             case 8:
                 //[8] Show Data Ruangan
-                showData_Dokter(RS);
+                // showData_Dokter(RS);
+                showData_Pasien(PAS);
                 break;
             case 9:
                 //[9] Show Data Keseluruhan RS

@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1640935780 source:d:\_personalgd\_semester-3\struktur-data\_tugasdantp\tubes\tubes\main.cpp
+1641013605 source:d:\_personalgd\_semester-3\struktur-data\_tugasdantp\tubes\tubes\main.cpp
 	"rumahsakit.h"
 
-1640935778 d:\_personalgd\_semester-3\struktur-data\_tugasdantp\tubes\tubes\rumahsakit.h
+1641013612 d:\_personalgd\_semester-3\struktur-data\_tugasdantp\tubes\tubes\rumahsakit.h
 	<iostream>
 	<string>
 	<stdlib.h>
 
-1640945634 source:d:\_personalgd\_semester-3\struktur-data\_tugasdantp\tubes\tubes\rumahsakit.cpp
+1641011626 source:d:\_personalgd\_semester-3\struktur-data\_tugasdantp\tubes\tubes\rumahsakit.cpp
 	"rumahsakit.h"
 

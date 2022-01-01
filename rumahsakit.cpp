@@ -109,7 +109,7 @@ void insertLast_ruangan(mll &RS, adr_ruangan R){
 void insertLast_pasien(ListChild &PAS, adr_pasien P) {
     /*
     IS : menerima list yang mungkin kosong dan pointer elemen ruangan baru.
-    FS : mengembalikan list dengan elemen ruangan yang telah dimasukkan di akhir list.
+    FS : mengembalikan list dengan elemen pasien yang telah dimasukkan di akhir list child.
     */
     if (first(PAS) == NIL) {
         first(PAS) = P;
@@ -196,12 +196,13 @@ void add_N_pasien(mll &RS, ListChild &PAS){
     adr_antrian S;
     string dokter;
     infoPasien pas;
-    int n;
+    int N;
 
     cout << "\nMasukkan banyaknya inputan : ";
-    cin >> n;
-    for (int i = 1; i < n+1; i++) {
-        cout << "\n=== Masukkan Data Pasien " << i << " ===";
+    cin >> N;
+    int i = 1;
+    while (i < N+1) {
+        cout << endl << "\n=== Masukkan Data Pasien " << i << " ===";
         cout << "\nID Pasien \t:";
         cin >> pas.idPasien;
         cout << "\nNama \t: ";
@@ -228,6 +229,7 @@ void add_N_pasien(mll &RS, ListChild &PAS){
             cout << "1234567" <<endl;
             cout << "\nData pasien " << i << " berhasil diinput";
         }
+        i++;
     }
 
 }
@@ -359,6 +361,26 @@ void showData_Dokter(mll RS) {
         cout << "\n\n============================= ";
     } else {
         cout << "\nData Rumah Sakit Kosong" << endl;
+    }
+}
+
+void showData_Pasien(ListChild PAS){
+    /*
+    IS : menerima list yang mungkin kosong.
+    FS : menampilkan list child.
+    */
+    adr_pasien P = first(PAS);
+    int i = 1;
+    if (P != NIL){
+        while (P != NIL) {
+            cout << "\nPasien " << i ;
+            cout << "\nNama pasien \t: " << info(P).nama;
+            cout << "\nID pasien \t: " << info(P).idPasien;
+            cout << "\nKeluhan pasien \t: " << info(P).keluhan;
+            cout << "\nUmur pasien \t: " << info(P).umur;
+            P = next(P);
+            i++;
+        }
     }
 }
 

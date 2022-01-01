@@ -103,6 +103,7 @@ void delete_ruangan(mll &RS, string dokter);
 //SHOW
 void showData_RS(mll RS);
 void showData_Dokter(mll RS);
+void showData_Pasien(ListChild PAS);
 
 //SEARCH
 adr_ruangan search_ruangan(mll RS, string spesialisasi);
