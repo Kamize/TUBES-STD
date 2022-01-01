@@ -133,8 +133,8 @@ void insertNew_pasien(mll &RS, adr_ruangan R, adr_pasien P){
     S = newElm_antrian();
 
     A = nextAntrian(R);
-    if (A == NIL){
-        A = S;
+    if (nextAntrian(R) == NIL){
+        nextAntrian(R) = S;
         pasien(S) = P;
     } else {
         while (next(A) != NIL) {
@@ -329,7 +329,7 @@ void showData_RS(mll RS){
                     cout << "\n PASIEN ANTRIAN KE-" << j;
                     cout << "\n Nama Pasien \t:" << info(pasien(P)).nama;
                     cout << "\n ID \t\t:" << info(pasien(P)).idPasien;
-                    cout << "\n Keluhan \t\t:" << info(pasien(P)).keluhan;
+                    cout << "\n Keluhan \t:" << info(pasien(P)).keluhan;
                     cout << "\n Umur \t\t:" << info(pasien(P)).umur;
                     P = next(P);
                     j++;

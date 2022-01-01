@@ -2,7 +2,6 @@
 #define RUMAHSAKIT_H_INCLUDED
 #include <iostream>
 #include <string>
-#include <stdlib.h>
 
 /*
 =====================

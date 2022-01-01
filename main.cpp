@@ -24,6 +24,7 @@ int main(){
     //input
     string namaDokter, namaPasien, spesialisasi;
     adr_pasien P;
+    adr_ruangan R;
     
     //create list
     create_list(RS);
@@ -73,7 +74,7 @@ int main(){
             case 4:
                 //[4] Proses Pasien 
                 cout << "\nMasukkan spesialisasi dokter untuk proses pasien : ";
-                cin >> spesialisasi;
+                spesialisasi = selectSpesialisasi();
                 proses_pasien(RS, search_ruangan(RS, spesialisasi),P);
                 break;
             case 5:
@@ -88,6 +89,11 @@ int main(){
                     cout << "\nDokter Tidak ditemukan";
                 } else {
                     cout << "\nDokter ditemukan";
+                    R = search_ruangan(RS, spesialisasi);
+                    cout << "\n===== Data Dokter =====";
+                    cout << "\nNama Dokter \t: " << info(R).dokter;
+                    cout << "\nSpesialisasi \t: " << info(R).spesialisasi;
+                    cout << "\nWaktu Kerja \t: " << info(R).waktu;
                 }
                 break;
             case 6:
@@ -98,6 +104,12 @@ int main(){
                     cout << "\nPasien Tidak ditemukan";
                 } else {
                     cout << "\nPasien ditemukan";
+                    P = search_pasien(PAS, namaPasien);
+                    cout << "\n======== Data Pasien ========";
+                    cout << "\nNama pasien \t: " << info(P).nama;
+                    cout << "\nID pasien \t: " << info(P).idPasien;
+                    cout << "\nKeluhan pasien \t: " << info(P).keluhan;
+                    cout << "\nUmur pasien \t: " << info(P).umur;
                 }
                 break;
             case 7:
@@ -106,24 +118,21 @@ int main(){
                 break;
             case 8:
                 //[8] Show Data Ruangan
-                // showData_Dokter(RS);
+                showData_Dokter(RS);
                 showData_Pasien(PAS);
                 break;
             case 9:
                 //[9] Show Data Keseluruhan RS
                 showData_RS(RS);
                 break;
-            case 0:
-                //[0] EXIT
-                break;
             default:
                 break;
         }
-        cout << "\nKembali ke menu utama (Y/N) : ";
+        cout << "\n\nKembali ke menu utama (Y/N) : ";
         cin >> menu;
-        if (menu == 'Y'){
+        if (menu == 'Y' || menu == 'y'){
             //CLEAR SCREEN
-            system("cls");
+            // system("cls");
             pilihan = selectMenu();
         } else {
             //EXIT
